@@ -1,0 +1,4 @@
+ Steps to build and run the docker container :
+    docker system prune
+    docker build -t onefan-docker .
+    docker run -p 8080:8080 onefan-docker
