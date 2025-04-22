@@ -1,12 +1,12 @@
 package com.onefanofficial.onefan_backend.model.data;
 
-import com.onefanofficial.onefan_backend.model.enums.GENDER;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.util.Date;
+import java.util.UUID;
 
 @Entity
 @Table(name="user_details")
@@ -15,14 +15,14 @@ public class UserDetails {
 
     @Column(name = "id")
     @Id
-    private String id;
+    private UUID id;
 
     @Column(name = "dob")
     private Date dob;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "gender")
-    private GENDER gender;
+//    @Enumerated(EnumType.STRING)
+//    @Column(name = "gender")
+//    private GENDER gender;
 
     @Column(name = "first_name")
     private String firstName;
@@ -37,14 +37,14 @@ public class UserDetails {
     private String phone;
 
     @Column(name = "email")
-    private String email;
+    private String emailId;
 
     @Column(name = "created_at")
     @CreationTimestamp
     private Date createdAt;
 
-    @Column(name = "updated_at")
+    @Column(name = "update_at")
     @UpdateTimestamp
-    private Date updatedAt;
+    private Date updatedAt = new Date();
 
 }

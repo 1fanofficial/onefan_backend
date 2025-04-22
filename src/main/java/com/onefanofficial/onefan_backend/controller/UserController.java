@@ -1,15 +1,14 @@
 package com.onefanofficial.onefan_backend.controller;
 
+import com.onefanofficial.onefan_backend.configuration.ExceptionHandler.Exceptions.UnauthorizedException;
+import com.onefanofficial.onefan_backend.configuration.annotations.CustomUser.CurrentUser;
 import com.onefanofficial.onefan_backend.model.request.UserDetailsRequest;
 import com.onefanofficial.onefan_backend.model.response.UserResponse;
 import com.onefanofficial.onefan_backend.service.UserService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/user")
@@ -20,8 +19,12 @@ public class UserController {
     private UserService userService;
 
     @PutMapping
-    public ResponseEntity<UserResponse> updateUserDetails(@RequestBody UserDetailsRequest userDetailsRequest){
+    public ResponseEntity<UserResponse> updateUserDetails(@CurrentUser String userId, @RequestBody UserDetailsRequest userDetailsRequest){
+        if(!userId.equals(userDetailsRequest.getId().toString())){
+            throw new UnauthorizedException("UNAUTHORIZED ACTION");
+        }
         return ResponseEntity.ok(userService.saveUserDetails(userDetailsRequest));
     }
+
 
 }

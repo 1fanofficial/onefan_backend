@@ -8,6 +8,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
+
 @Service
 public class UserService {
 
@@ -20,6 +22,7 @@ public class UserService {
 
     public UserResponse saveUserDetails(UserDetailsRequest userDetailsRequest){
         UserDetails userDetails = modelMapper.map(userDetailsRequest,UserDetails.class);
+        userDetails.setCreatedAt(new Date());
         userDetailsRepository.save(userDetails);
         return modelMapper.map(userDetails,UserResponse.class);
     }

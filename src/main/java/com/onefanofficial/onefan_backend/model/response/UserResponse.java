@@ -1,17 +1,16 @@
 package com.onefanofficial.onefan_backend.model.response;
 
-import com.onefanofficial.onefan_backend.model.enums.GENDER;
 import lombok.Data;
 
 import java.util.Date;
+import java.util.UUID;
 
 @Data
 public class UserResponse {
-    private String id;
+    private UUID id;
     private String firstName;
     private String lastName;
     private Date dob;
-    private GENDER gender;
     private String emailId;
     private String phone;
     private String country;
