@@ -7,6 +7,7 @@ import com.onefanofficial.onefan_backend.configuration.ExceptionHandler.Exceptio
 import com.onefanofficial.onefan_backend.model.response.ExceptionResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.orm.jpa.JpaSystemException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -22,6 +23,16 @@ public class GlobalExceptionHandler {
         response.setTimestamp(LocalDateTime.now());
 
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(JpaSystemException.class)
+    public ResponseEntity<ExceptionResponse> jpaError(JpaSystemException ex){
+        ExceptionResponse response=  new ExceptionResponse();
+        response.setErrorCode("DATABASE_ERROR");
+        response.setErrorMessage(ex.getMessage());
+        response.setTimestamp(LocalDateTime.now());
+
+        return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @ExceptionHandler(ResourceAlreadyExists.class)

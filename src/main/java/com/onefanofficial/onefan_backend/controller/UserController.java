@@ -26,5 +26,13 @@ public class UserController {
         return ResponseEntity.ok(userService.saveUserDetails(userDetailsRequest));
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<UserResponse> getUserDetails(@CurrentUser String userId, @PathVariable String id){
+        if(!userId.equals(id)){
+            throw new UnauthorizedException("UNAUTHORIZED ACTION");
+        }
+        return ResponseEntity.ok(userService.getUserById(id));
+    }
+
 
 }
