@@ -1,0 +1,9 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="One Fan Backend" type="Application" factoryName="Application">
+    <option name="MAIN_CLASS_NAME" value="com.onefanofficial.onefan_backend.OnefanBackendApplication" />
+    <module name="onefan-backend" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>
