@@ -22,7 +22,7 @@ public class SpringSecurity {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((auth) ->
-                        auth.requestMatchers("/user/**").authenticated()
+                        auth.requestMatchers("/user/**","/race/**").authenticated()
                                 .anyRequest().permitAll()
                 )
                 .csrf(AbstractHttpConfigurer::disable)
