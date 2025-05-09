@@ -27,14 +27,14 @@ public class RaceDriver {
     @Column(name="finish_position")
     private int finishPosition;
 
-    @Column(name="grid_position")
-    private int gridPosition;
+    @Column(name="start_position")
+    private int startPosition;
 
     @Column(name="pit_stops")
     private int pitStops;
 
-    @Column(name="status")
-    private String status;
+    @Column(name="finish_status")
+    private String finishStatus;
 
     @Column(name="laps_completed")
     private int lapsCompleted;
