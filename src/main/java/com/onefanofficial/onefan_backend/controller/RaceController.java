@@ -19,12 +19,12 @@ public class RaceController {
     private RaceService raceService;
 
     @GetMapping("/all")
-    public ResponseEntity<List<RaceResponse>> getAllRaces(){
+    public ResponseEntity<List<RaceResponse>> getAllRace(){
         return ResponseEntity.ok(raceService.getAllRaces());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<RaceResponse> getAllRaces(@PathVariable String id){
+    public ResponseEntity<RaceResponse> getRaceById(@PathVariable String id){
         return ResponseEntity.ok(raceService.getRaceById(id));
     }
 
