@@ -48,7 +48,7 @@ public class Contest {
 
     @JoinColumn(name ="race_id")
     @ManyToOne
-    private RaceCalendar raceId;
+    private RaceCalendar raceDetails;
 
     @JoinColumn(name ="winner")
     @ManyToOne

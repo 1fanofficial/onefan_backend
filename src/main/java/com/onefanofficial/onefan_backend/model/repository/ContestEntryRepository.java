@@ -1,0 +1,13 @@
+package com.onefanofficial.onefan_backend.model.repository;
+
+import com.onefanofficial.onefan_backend.model.data.ContestEntry;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+
+import java.util.List;
+import java.util.UUID;
+
+public interface ContestEntryRepository extends JpaRepository<ContestEntry, UUID> {
+   @Query("SELECT e FROM ContestEntry e WHERE e.contest.id = :contestId AND e.userDetails.id = :userId")
+    List<ContestEntry> findByContestIdAndUserId(UUID contestId, UUID userId);
+}
