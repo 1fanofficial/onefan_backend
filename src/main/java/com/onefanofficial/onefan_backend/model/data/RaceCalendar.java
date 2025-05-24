@@ -19,7 +19,7 @@ public class RaceCalendar {
     private UUID id;
 
     @Column(name = "season")
-    private int seasonId; // for now this is year only
+    private int season;
 
     @Column(name = "round")
     private int round;
@@ -28,7 +28,7 @@ public class RaceCalendar {
     private String raceName;
 
     @Column(name = "circuit_name")
-    private String circuit;
+    private String circuitName;
 
     @Column(name = "country")
     private String country;
@@ -44,7 +44,7 @@ public class RaceCalendar {
 
     @JoinColumn(name="pole_driver_id")
     @ManyToOne
-    private Driver polePositionDriver;
+    private Driver poleDriver;
 
     @JoinColumn(name="fastest_lap_driver_id")
     @ManyToOne
@@ -52,7 +52,7 @@ public class RaceCalendar {
 
     @JoinColumn(name="winning_driver_id")
     @ManyToOne
-    private Driver winningDriver;
+    private Driver raceWinner;
 
     @Column(name="status")
     private String status;
@@ -61,7 +61,7 @@ public class RaceCalendar {
     private Date qualifyingStartTime;
 
     @Column(name="sprint_start_time")
-    private Date sprintRaceTime;
+    private Date sprintStartTime;
 
     @Column(name="created_at")
     @CreationTimestamp

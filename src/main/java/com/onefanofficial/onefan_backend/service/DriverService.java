@@ -3,12 +3,14 @@ package com.onefanofficial.onefan_backend.service;
 import com.onefanofficial.onefan_backend.configuration.ExceptionHandler.Exceptions.ResourceNotFoundException;
 import com.onefanofficial.onefan_backend.model.data.Driver;
 import com.onefanofficial.onefan_backend.model.data.RaceCalendar;
+import com.onefanofficial.onefan_backend.model.data.RaceDriver;
 import com.onefanofficial.onefan_backend.model.repository.DriverRepository;
 import com.onefanofficial.onefan_backend.model.repository.RaceCalendarRepository;
 import com.onefanofficial.onefan_backend.model.repository.RaceDriverRepository;
 import com.onefanofficial.onefan_backend.model.response.DriverDetailResponse;
 import com.onefanofficial.onefan_backend.util.ConverterHelper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -42,15 +44,12 @@ public class DriverService {
         throw new ResourceNotFoundException("Driver not found");
     }
 
-    public List<DriverDetailResponse> getDriversByRace(String raceId){
-        Optional<RaceCalendar> raceCalendarOptional = raceCalendarRepository.findById(UUID.fromString(raceId));
-        if(raceCalendarOptional.isPresent()){
-            var raceCalendar = raceCalendarOptional.get();
-            return raceDriverRepository.findByRace(raceCalendar).stream()
-                    .map(raceDriver ->  ConverterHelper.convertFromDriver(raceDriver.getDriver()))
-                    .collect(Collectors.toList());
+    public ResponseEntity<List<RaceDriver>> getDriversByRace(String raceId){
+        Optional<RaceCalendar> raceCalendar = raceCalendarRepository.findById(UUID.fromString(raceId));
+        if(raceCalendar.isEmpty()){
+            throw new ResourceNotFoundException("Race not found");
         }
-        throw new ResourceNotFoundException("Race not found");
+        List<RaceDriver> raceDrivers = raceDriverRepository.findByRace(raceCalendar.get());
+        return ResponseEntity.ok(raceDrivers);
     }
-
 }

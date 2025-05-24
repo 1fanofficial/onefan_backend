@@ -13,5 +13,5 @@ public class DriverDetailResponse {
     private int carNumber;
     private String status;
     private String nationality;
-    private TeamDetailResponse teamDetails;
+    private TeamDetailResponse team;
 }

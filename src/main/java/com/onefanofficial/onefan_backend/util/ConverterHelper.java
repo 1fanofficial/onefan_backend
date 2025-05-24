@@ -17,22 +17,21 @@ public class ConverterHelper {
         response.setId(raceCalendar.getId());
         response.setLaps(raceCalendar.getLaps());
         response.setCountry(raceCalendar.getCountry());
-//        response.setFastestLapDriver();
         response.setStatus(raceCalendar.getStatus());
-        response.setSeason(raceCalendar.getSeasonId());
+        response.setSeason(raceCalendar.getSeason());
         response.setRound(raceCalendar.getRound());
         response.setTrackLength(raceCalendar.getTrackLength());
-        response.setCircuitName(raceCalendar.getCircuit());
+        response.setCircuitName(raceCalendar.getCircuitName());
         response.setQualifyingStartTime(raceCalendar.getQualifyingStartTime());
-        response.setSprintStartTime(raceCalendar.getSprintRaceTime());
+        response.setSprintStartTime(raceCalendar.getSprintStartTime());
         response.setRaceStartTime(raceCalendar.getRaceStartTime());
 
-        if(raceCalendar.getWinningDriver() != null){
-            response.setRaceWinner(convertFromDriver(raceCalendar.getWinningDriver()));
+        if(raceCalendar.getRaceWinner() != null){
+            response.setRaceWinner(convertFromDriver(raceCalendar.getRaceWinner()));
         }
 
-        if(raceCalendar.getPolePositionDriver() != null){
-            response.setPoleDriver(convertFromDriver(raceCalendar.getPolePositionDriver()));
+        if(raceCalendar.getPoleDriver() != null){
+            response.setPoleDriver(convertFromDriver(raceCalendar.getPoleDriver()));
         }
 
 
@@ -53,7 +52,7 @@ public class ConverterHelper {
         driverDetailResponse.setDriverCode(driver.getDriverCode());
         driverDetailResponse.setStatus(driver.getStatus());
         driverDetailResponse.setNationality(driver.getNationality());
-        driverDetailResponse.setTeamDetails(convertFromTeam(driver.getTeam()));
+        driverDetailResponse.setTeam(convertFromTeam(driver.getTeam()));
 
         return driverDetailResponse;
     }

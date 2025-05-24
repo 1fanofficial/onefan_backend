@@ -10,6 +10,5 @@ import java.util.UUID;
 
 @Repository
 public interface RaceDriverRepository extends JpaRepository<RaceDriver, UUID> {
-
     List<RaceDriver> findByRace(RaceCalendar raceCalendar);
 }

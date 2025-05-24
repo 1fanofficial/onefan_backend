@@ -1,17 +1,13 @@
 package com.onefanofficial.onefan_backend.service;
 
-import com.onefanofficial.onefan_backend.model.data.Contest;
-import com.onefanofficial.onefan_backend.model.data.ContestEntry;
+import com.onefanofficial.onefan_backend.model.data.*;
 import com.onefanofficial.onefan_backend.model.repository.ContestEntryRepository;
 import com.onefanofficial.onefan_backend.model.repository.ContestRepository;
 import com.onefanofficial.onefan_backend.model.response.ContestResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class ContestService {
@@ -33,7 +29,7 @@ public class ContestService {
             contestResponse.setStatus(contest.getStatus());
             contestResponse.setEntryFees(contestResponse.getEntryFees());
             contestResponse.setMaxEntries(contestResponse.getMaxEntries());
-            contestResponse.setRaceName(contest.getRaceDetails().getRaceName());
+            contestResponse.setRaceDetails(contest.getRaceDetails());
             contestResponse.setContestName(contest.getContestName());
             contestResponse.setEntryFees(contest.getEntryFees());
             if (!Objects.equals(userId, "anonymousUser")) {
