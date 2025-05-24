@@ -64,6 +64,8 @@ public class ConverterHelper {
         response.setName(team.getName());
         response.setTeamCode(team.getTeamCode());
         response.setTeamColor(team.getTeamColor());
+        response.setGradientOne(team.getGradientOne());
+        response.setGradientTwo(team.getGradientTwo());
 
         return response;
     }

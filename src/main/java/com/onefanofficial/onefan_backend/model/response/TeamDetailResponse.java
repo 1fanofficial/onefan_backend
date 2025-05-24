@@ -10,4 +10,6 @@ public class TeamDetailResponse {
     private String name;
     private String teamCode;
     private String teamColor;
+    private String gradientOne;
+    private String gradientTwo;
 }

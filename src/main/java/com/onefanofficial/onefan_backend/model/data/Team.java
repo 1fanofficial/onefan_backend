@@ -28,6 +28,12 @@ public class Team {
     @Column(name="team_color")
     private String teamColor;
 
+    @Column(name="gradientOne")
+    private String gradientOne;
+
+    @Column(name="gradientTwo")
+    private String gradientTwo;
+
     @Column(name="created_at")
     @CreationTimestamp
     private Date createdAt;
