@@ -60,14 +60,12 @@ public class ContestService {
 
         var contest = optionalContest.get();
 
-        var contestEntry = ConverterHelper.convertToContestEntryEntityFromRequest(contestEntryRequest, userDetailsOptional.get(), contest);
+        var contestEntry = ConverterHelper.convertToContestEntryEntityFromRequest(userDetailsOptional.get(), contest);
         contestEntry = contestEntryRepository.save(contestEntry);
 
         List<DriverRankings> driverRankings = new ArrayList<>();
         ContestEntry finalContestEntry = contestEntry;
-        contestEntryRequest.getDriverRankings().forEach(driverRankingRequest -> {
-            driverRankings.add(ConverterHelper.convertToDriverRankingEntityFromRequest(driverRankingRequest,finalContestEntry));
-        });
+        contestEntryRequest.getDriverRankings().forEach(driverRankingRequest -> driverRankings.add(ConverterHelper.convertToDriverRankingEntityFromRequest(driverRankingRequest,finalContestEntry)));
 
         driverRankingRepository.saveAll(driverRankings);
 

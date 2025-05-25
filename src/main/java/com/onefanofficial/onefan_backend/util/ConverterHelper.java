@@ -90,7 +90,7 @@ public class ConverterHelper {
         return contestResponse;
     }
 
-    public static ContestEntry convertToContestEntryEntityFromRequest(ContestEntryRequest contestEntryRequest, UserDetails userDetails,Contest contest){
+    public static ContestEntry convertToContestEntryEntityFromRequest(UserDetails userDetails,Contest contest){
         ContestEntry contestEntry = new ContestEntry();
         contestEntry.setContest(contest);
         contestEntry.setUserDetails(userDetails);
