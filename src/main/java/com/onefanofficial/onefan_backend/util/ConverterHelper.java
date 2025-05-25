@@ -1,7 +1,6 @@
 package com.onefanofficial.onefan_backend.util;
 
 import com.onefanofficial.onefan_backend.model.data.*;
-import com.onefanofficial.onefan_backend.model.request.ContestEntryRequest;
 import com.onefanofficial.onefan_backend.model.request.DriverRankingRequest;
 import com.onefanofficial.onefan_backend.model.response.ContestResponse;
 import com.onefanofficial.onefan_backend.model.response.DriverDetailResponse;
