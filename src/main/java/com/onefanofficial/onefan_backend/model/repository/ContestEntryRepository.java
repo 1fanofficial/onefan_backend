@@ -10,4 +10,7 @@ import java.util.UUID;
 public interface ContestEntryRepository extends JpaRepository<ContestEntry, UUID> {
    @Query("SELECT e FROM ContestEntry e WHERE e.contest.id = :contestId AND e.userDetails.id = :userId")
     List<ContestEntry> findByContestIdAndUserId(UUID contestId, UUID userId);
+
+   @Query("SELECT e FROM ContestEntry e where e.userDetails.id = :userId")
+    List<ContestEntry> findByUserId(UUID userId);
 }

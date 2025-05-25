@@ -1,12 +1,16 @@
 package com.onefanofficial.onefan_backend.util;
 
-import com.onefanofficial.onefan_backend.model.data.Driver;
-import com.onefanofficial.onefan_backend.model.data.RaceCalendar;
-import com.onefanofficial.onefan_backend.model.data.Team;
+import com.onefanofficial.onefan_backend.model.data.*;
+import com.onefanofficial.onefan_backend.model.request.ContestEntryRequest;
+import com.onefanofficial.onefan_backend.model.request.DriverRankingRequest;
+import com.onefanofficial.onefan_backend.model.response.ContestResponse;
 import com.onefanofficial.onefan_backend.model.response.DriverDetailResponse;
 import com.onefanofficial.onefan_backend.model.response.RaceResponse;
 import com.onefanofficial.onefan_backend.model.response.TeamDetailResponse;
 import org.springframework.stereotype.Component;
+
+import java.util.Date;
+import java.util.UUID;
 
 @Component
 public class ConverterHelper {
@@ -69,5 +73,46 @@ public class ConverterHelper {
 
         return response;
     }
+
+    public static ContestResponse convertFromContestToContestResponse(Contest contest){
+        ContestResponse contestResponse = new ContestResponse();
+        contestResponse.setId(contest.getId());
+        contestResponse.setContestName(contestResponse.getContestName());
+        contestResponse.setDeadline(contest.getDeadline());
+        contestResponse.setEntries(contest.getEntries());
+        contestResponse.setStatus(contest.getStatus());
+        contestResponse.setEntryFees(contestResponse.getEntryFees());
+        contestResponse.setMaxEntries(contestResponse.getMaxEntries());
+        contestResponse.setRaceDetails(contest.getRaceDetails());
+        contestResponse.setContestName(contest.getContestName());
+        contestResponse.setEntryFees(contest.getEntryFees());
+
+        return contestResponse;
+    }
+
+    public static ContestEntry convertToContestEntryEntityFromRequest(ContestEntryRequest contestEntryRequest, UserDetails userDetails,Contest contest){
+        ContestEntry contestEntry = new ContestEntry();
+        contestEntry.setContest(contest);
+        contestEntry.setUserDetails(userDetails);
+
+        return contestEntry;
+    }
+
+    public static DriverRankings convertToDriverRankingEntityFromRequest(DriverRankingRequest driverRankingRequest, ContestEntry contestEntry){
+        Driver driver = new Driver();
+        driver.setId(UUID.fromString(driverRankingRequest.getDriverId()));
+
+        DriverRankings driverRanking = new DriverRankings();
+        driverRanking.setContestEntry(contestEntry);
+        driverRanking.setCreatedAt(new Date());
+        driverRanking.setPredictedPosition(driverRankingRequest.getPredictedPosition());
+        driverRanking.setDriver(driver);
+
+        return driverRanking;
+
+
+    }
+
+
 
 }
