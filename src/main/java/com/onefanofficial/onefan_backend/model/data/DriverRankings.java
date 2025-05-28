@@ -14,21 +14,17 @@ public class DriverRankings {
 
     @Id
     @Column(name="id")
+    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @JoinColumn(name="driver_id")
+    @JoinColumn(name="race_driver_id")
     @ManyToOne
-    private Driver driver;
+    private RaceDriver raceDriver;
 
     @JoinColumn(name = "contest_entry_id")
     @ManyToOne
     private ContestEntry contestEntry;
 
-    @CreationTimestamp
-    @Column(name="created_at")
-    private Date createdAt;
-
     @Column(name="predicted_position")
     private int predictedPosition;
-
 }

@@ -2,13 +2,11 @@ package com.onefanofficial.onefan_backend.service;
 
 import com.onefanofficial.onefan_backend.configuration.ExceptionHandler.Exceptions.ResourceNotFoundException;
 import com.onefanofficial.onefan_backend.model.data.*;
-import com.onefanofficial.onefan_backend.model.repository.ContestEntryRepository;
-import com.onefanofficial.onefan_backend.model.repository.ContestRepository;
-import com.onefanofficial.onefan_backend.model.repository.DriverRankingRepository;
-import com.onefanofficial.onefan_backend.model.repository.UserDetailsRepo;
+import com.onefanofficial.onefan_backend.model.repository.*;
 import com.onefanofficial.onefan_backend.model.request.ContestEntryRequest;
 import com.onefanofficial.onefan_backend.model.response.ContestResponse;
 import com.onefanofficial.onefan_backend.util.ConverterHelper;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,6 +27,9 @@ public class ContestService {
     @Autowired
     private DriverRankingRepository driverRankingRepository;
 
+    @Autowired
+    private RaceDriverRepository raceDriverRepository;
+
     public List<ContestResponse> getContestsByStatus(String userId, String status) {
         List<Contest> contests = contestRepository.findByStatus(status);
         List<ContestResponse> contestResponses = new ArrayList<>();
@@ -46,28 +47,44 @@ public class ContestService {
     }
 
 
-    public void joinContest(String userId, ContestEntryRequest contestEntryRequest){
+    @Transactional
+    public void joinContest(String userId, ContestEntryRequest contestEntryRequest) {
         Optional<Contest> optionalContest = contestRepository.findById(UUID.fromString(contestEntryRequest.getContestId()));
 
-        if(optionalContest.isEmpty()){
+        if (optionalContest.isEmpty()) {
             throw new ResourceNotFoundException("Contest Not Found");
         }
         var userDetailsOptional = userDetailsRepo.findById(UUID.fromString(userId));
 
-        if(userDetailsOptional.isEmpty()){
+        if (userDetailsOptional.isEmpty()) {
             throw new ResourceNotFoundException("Please update the user Details before proceeding for Contest");
         }
 
         var contest = optionalContest.get();
 
-        var contestEntry = ConverterHelper.convertToContestEntryEntityFromRequest(userDetailsOptional.get(), contest);
+        Optional<RaceDriver> optionalFastestLapDriver = Optional.ofNullable(raceDriverRepository.findByRaceAndDriver(contest.getRaceDetails().getId(), UUID.fromString(contestEntryRequest.getFastestLapDriverId())));
+
+        if (optionalFastestLapDriver.isEmpty()) {
+            throw new ResourceNotFoundException("Driver not found");
+        }
+
+        RaceDriver fastestLapDriver = optionalFastestLapDriver.get();
+
+        var contestEntry = ConverterHelper.convertToContestEntryEntityFromRequest(userDetailsOptional.get(), contest, fastestLapDriver);
         contestEntry = contestEntryRepository.save(contestEntry);
 
         List<DriverRankings> driverRankings = new ArrayList<>();
         ContestEntry finalContestEntry = contestEntry;
-        contestEntryRequest.getDriverRankings().forEach(driverRankingRequest -> driverRankings.add(ConverterHelper.convertToDriverRankingEntityFromRequest(driverRankingRequest,finalContestEntry)));
+        contestEntryRequest.getDriverRankings().forEach(driverRankingRequest -> {
+            Optional<RaceDriver> optionalRaceDriver = Optional.ofNullable(raceDriverRepository.findByRaceAndDriver(contest.getRaceDetails().getId(), UUID.fromString(driverRankingRequest.getDriverId())));
+
+            if (optionalRaceDriver.isEmpty()) {
+                throw new ResourceNotFoundException("Driver not found");
+            }
+
+            driverRankings.add(ConverterHelper.convertToDriverRankingEntityFromRequest(optionalRaceDriver.get(), driverRankingRequest.getPredictedPosition(), finalContestEntry));
+        });
 
         driverRankingRepository.saveAll(driverRankings);
-
     }
 }

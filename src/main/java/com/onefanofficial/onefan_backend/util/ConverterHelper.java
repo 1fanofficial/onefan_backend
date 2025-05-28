@@ -89,29 +89,21 @@ public class ConverterHelper {
         return contestResponse;
     }
 
-    public static ContestEntry convertToContestEntryEntityFromRequest(UserDetails userDetails,Contest contest){
+    public static ContestEntry convertToContestEntryEntityFromRequest(UserDetails userDetails,Contest contest, RaceDriver fastestLapDriver){
         ContestEntry contestEntry = new ContestEntry();
         contestEntry.setContest(contest);
         contestEntry.setUserDetails(userDetails);
+        contestEntry.setFastestLapDriver(fastestLapDriver);
 
         return contestEntry;
     }
 
-    public static DriverRankings convertToDriverRankingEntityFromRequest(DriverRankingRequest driverRankingRequest, ContestEntry contestEntry){
-        Driver driver = new Driver();
-        driver.setId(UUID.fromString(driverRankingRequest.getDriverId()));
-
+    public static DriverRankings convertToDriverRankingEntityFromRequest(RaceDriver raceDriver, int predictedPosition, ContestEntry contestEntry){
         DriverRankings driverRanking = new DriverRankings();
         driverRanking.setContestEntry(contestEntry);
-        driverRanking.setCreatedAt(new Date());
-        driverRanking.setPredictedPosition(driverRankingRequest.getPredictedPosition());
-        driverRanking.setDriver(driver);
+        driverRanking.setPredictedPosition(predictedPosition);
+        driverRanking.setRaceDriver(raceDriver);
 
         return driverRanking;
-
-
     }
-
-
-
 }

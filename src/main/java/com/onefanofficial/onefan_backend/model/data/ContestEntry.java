@@ -9,8 +9,9 @@ import java.util.UUID;
 @Table(name="contest_entry")
 @Data
 public class ContestEntry {
-    @Column(name = "id")
     @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
     @JoinColumn(name = "contest_id")
@@ -26,4 +27,8 @@ public class ContestEntry {
 
     @Column(name = "rank")
     private int rank;
+
+    @JoinColumn(name = "fastest_lap_driver_id")
+    @ManyToOne
+    private RaceDriver fastestLapDriver;
 }
