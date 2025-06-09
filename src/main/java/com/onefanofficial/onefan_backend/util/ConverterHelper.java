@@ -1,7 +1,6 @@
 package com.onefanofficial.onefan_backend.util;
 
 import com.onefanofficial.onefan_backend.model.data.*;
-import com.onefanofficial.onefan_backend.model.request.DriverRankingRequest;
 import com.onefanofficial.onefan_backend.model.response.ContestResponse;
 import com.onefanofficial.onefan_backend.model.response.DriverDetailResponse;
 import com.onefanofficial.onefan_backend.model.response.RaceResponse;
@@ -73,18 +72,19 @@ public class ConverterHelper {
         return response;
     }
 
-    public static ContestResponse convertFromContestToContestResponse(Contest contest){
+    public static ContestResponse convertFromContestToContestResponse(Contest contest, int contestEntriesCount){
         ContestResponse contestResponse = new ContestResponse();
         contestResponse.setId(contest.getId());
-        contestResponse.setContestName(contestResponse.getContestName());
+        contestResponse.setContestName(contest.getContestName());
         contestResponse.setDeadline(contest.getDeadline());
-        contestResponse.setEntries(contest.getEntries());
+        contestResponse.setEntries(contestEntriesCount);
         contestResponse.setStatus(contest.getStatus());
-        contestResponse.setEntryFees(contestResponse.getEntryFees());
-        contestResponse.setMaxEntries(contestResponse.getMaxEntries());
+        contestResponse.setEntryFees(contest.getEntryFees());
+        contestResponse.setMaxEntries(contest.getMaxEntries());
         contestResponse.setRaceDetails(contest.getRaceDetails());
         contestResponse.setContestName(contest.getContestName());
         contestResponse.setEntryFees(contest.getEntryFees());
+        contestResponse.setPrizePool((int) (contestEntriesCount * contest.getEntryFees()));
 
         return contestResponse;
     }

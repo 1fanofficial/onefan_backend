@@ -1,5 +1,6 @@
 package com.onefanofficial.onefan_backend.model.repository;
 
+import com.onefanofficial.onefan_backend.model.data.Contest;
 import com.onefanofficial.onefan_backend.model.data.ContestEntry;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -13,4 +14,7 @@ public interface ContestEntryRepository extends JpaRepository<ContestEntry, UUID
 
    @Query("SELECT e FROM ContestEntry e where e.userDetails.id = :userId")
     List<ContestEntry> findByUserId(UUID userId);
+
+   @Query("SELECT COUNT(e) FROM ContestEntry e WHERE e.contest = :contest")
+    int findCountByContest(Contest contest);
 }

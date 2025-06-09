@@ -35,7 +35,8 @@ public class ContestService {
         List<ContestResponse> contestResponses = new ArrayList<>();
         var contestEntries = contestEntryRepository.findByUserId(UUID.fromString(userId)).stream().map(ContestEntry::getContest).collect(Collectors.toSet());
         contests.forEach(contest -> {
-            var contestResponse = ConverterHelper.convertFromContestToContestResponse(contest);
+            int contestEntriesCount = contestEntryRepository.findCountByContest(contest);
+            var contestResponse = ConverterHelper.convertFromContestToContestResponse(contest, contestEntriesCount);
             if (!Objects.equals(userId, "anonymousUser")) {
                 boolean hasJoined = contestEntries.contains(contest);
                 contestResponse.setHasJoined(hasJoined);
