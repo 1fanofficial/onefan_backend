@@ -1,4 +1,41 @@
- Steps to build and run the docker container :
-    docker system prune
-    docker build -t onefan-docker .
-    docker run -p 8080:8080 onefan-docker
+# 1FAN Backend
+
+Backend services for the 1FAN F1 fantasy sports application.
+
+## Overview
+
+The backend manages F1 race data, contests, user contest entries,
+driver predictions, race results, points calculation, and leaderboard
+generation.
+
+## Core Domain
+
+The application models the following entities:
+
+- Users
+- Races
+- Drivers
+- Teams
+- Race Driver Results
+- Contests
+- Contest Entries
+- Driver Rankings
+
+## Contest Workflow
+
+1. Administrators create contests for upcoming races.
+2. Users join an available contest.
+3. Users submit predicted driver finishing positions.
+4. Users select a fastest-lap driver.
+5. Race results are recorded after the race.
+6. Predictions are compared against actual results.
+7. Points are calculated.
+8. Contest and season leaderboards are generated.
+
+## Database
+
+PostgreSQL is used for persistent storage.
+
+The database schema is available here:
+
+[View Database Schema](https://drive.google.com/file/d/1NQ86b5C9gCJlp9v4YUk9zInlUuzTvbsP/view?usp=sharing)
